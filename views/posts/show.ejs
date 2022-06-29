@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  
+    <title>Insta API</title>
+    <style>
+        body{
+            background-color: aquamarine;
+
+        }
+    </style>
+</head>
+<body >
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">InstaG</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <h1>All posts</h1>
+                    <a class="nav-link" href="/posts">Recent Posts</a>
+                    <a class="nav-link" href="/posts/new">New Post</a>
+                </div>
+            </div>
+        </div>
+
+</nav>
+<div class="row">
+    <div class="col-6">
+        <div class="card mb-3">
+            <img src="<%= post.image%>" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= post.title%></h5>
+                <p class="card-text"><%= post.description%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-muted"><%= post.location%></li>
+              
+            </ul>
+            <div class="card-body">
+                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                    <button class="btn ">Delete</button>
+                </form>
+             
+                
+            </div>
+           
+        </div>
+
+    </div>
+
+
+    <div class="col-6">
+        <h2>Comment on the post</h2>
+        <form action="/posts/<%=post._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="rating"></label>
+                <input class="form-range" type="range" min="1" max="4" name="review[rating]" id="rating">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="body">Comment here:</label>
+                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+        <% for(let review of post.reviews) { %>
+        <div class="card mb-3 ">
+            <div class="card-body">
+
+                <p class="card-text">Stars: <%= review.rating %></p>
+            
+                <p class="card-text">Comment: <%= review.body %></p>
+                
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+
+                  
+               
+ 
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+
+    <script src='/javascripts/validateForms.js'></script>
+</body>
+</html>
